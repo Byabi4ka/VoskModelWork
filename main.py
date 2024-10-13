@@ -130,7 +130,7 @@ model = Model('vosk-model-small-ru-0.22')
 rec = KaldiRecognizer(model, 16000)
 
 def listen_offline():
-    input_file = '3a1fb1e8-76ff-11ee-9242-c09bf4619c03.mp3'
+    input_file = 'TestFiles/2023_11_02__10_33_18.wav'
     output_file = "output_audio.wav"
     
     # Загрузка аудиофайла и удаление шума
@@ -152,8 +152,6 @@ def listen_offline():
 def main():
     query = listen_offline()
     
-    attribute, label = get_attribute(query)
-    
      # Открываем JSON файл
     with open("keeys.json", "rb") as f:
         l = json.load(f)
@@ -161,13 +159,11 @@ def main():
      # Проверяем наличие ключа в словаре
     found_key = None
     for key, phrases in l.items():
-        print(key)
         if any(phrase in query for phrase in phrases):
             found_key = key
             break
     
     # #ключ для определенного атрибута
-    print(query)
     if found_key:
         print("Запрос:", query)
         attribute, label = get_attribute(found_key)
